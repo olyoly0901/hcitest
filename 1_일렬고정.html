@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+    <style> 
+        .video{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container{
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .button:hover{
+            filter: opacity(60%);
+        }
+
+        img{
+            padding: 8px;
+        }
+</style>
+
+
+<head>
+    <title>01 | 일렬배치(고정) 테스트</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<!--<div>
+    현재 재생중인 동영상<span id="video_src"></span><br/>
+    위버튼 : <span id="src_01"></span><br/>
+    아래버튼 : <span id="src_02"></span><br/>
+    왼쪽버튼 : <span id="src_03"></span><br/>
+    오른버튼 : <span id="src_04"></span><br/>
+</div>-->
+
+<div class="video" >
+    <h2 style="text-align: center;">일렬 배치(고정)</h2>
+    <video style="width:800px; height:450px;"  id="a_video" autoplay="true" muted="muted">
+        <source id="video_tag" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4"/>
+    </video>
+
+    <div class="container">
+        <table style="text-align:center; margin: auto" border="0">
+            <tr>
+                <td></td>
+                <td>
+                    <a id="btn_01" href="#" class="btn" > <img class="button" src="방향키상.png" alt=""></a>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <a id="btn_03" href="#" class="btn" > <img class="button" src="방향키좌.png" alt=""></a>
+                </td>
+                <td>
+                    <a id="btn_05" href="#" class="btn" > <img class="button" src="방향키대기.png" alt=""></a>
+                </td>
+                <td>
+                    <a id="btn_04" href="#" class="btn" > <img class="button" src="방향키우.png" alt=""></a>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <a id="btn_02" href="#" class="btn" > <img class="button" src="방향키하.png" alt=""></a>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script>
+
+
+var arr =  [];
+
+
+function push_arr(v_id, src, btn_01, btn_02,btn_03,btn_04,btn_05)
+{
+    var tmp = {src : src, btn_01:btn_01, btn_02:btn_02, btn_03:btn_03, btn_04:btn_04, btn_05:btn_05 };
+    arr[v_id] = tmp;
+}
+
+//고유 아이디, 영상 주소, 해당 버튼 목적 아이디x4
+push_arr('01', '1/01_0.mp4', null, null, null, '02', null);
+push_arr('02', '1/01_1.mp4', '03', null, null, null, null);
+push_arr('03', '1/01_2.mp4', null, null, null, '04', null);
+push_arr('04', '1/01_3.mp4', null, '05', null, null, null);
+push_arr('05', '1/01_4.mp4', null, null, null, null, '06');
+push_arr('06', '1/01_5.mp4', null, null, null, '07', null);
+push_arr('07', '1/01_6.mp4', '08', null, null, null, null);
+push_arr('08', '1/01_7.mp4', null, '09', null, null, null);
+push_arr('09', '1/01_8.mp4', null, null, '10', null, null);
+push_arr('10', '1/01_9.mp4', '11', null, null, null, null);
+push_arr('11', '1/01_10.mp4', null, null, null, null, '12');
+push_arr('12', '1/01_11.mp4', null, '13', null, null, null);
+push_arr('13', '1/01_12.mp4', null, null, '14', null, null);
+push_arr('14', '1/01_13.mp4', null, null, null, null, null);
+
+function change_video(id)
+{
+
+
+    if(arr[id]!=null){
+        $('#btn_01').attr('value', arr[id]['btn_01']);
+        $('#btn_02').attr('value', arr[id]['btn_02']);
+        $('#btn_03').attr('value', arr[id]['btn_03']);
+        $('#btn_04').attr('value', arr[id]['btn_04']);
+        $('#btn_05').attr('value', arr[id]['btn_05']);
+        $('#video_tag').attr('src', arr[id]['src']);
+        $("#a_video")[0].load();
+        var promise = $('#a_video')[0].play();
+
+        $('#video_src').html(arr[id]['src']);
+        $('#src_01').html(arr[id]['btn_01']);
+        $('#src_02').html(arr[id]['btn_02']);
+        $('#src_03').html(arr[id]['btn_03']);
+        $('#src_04').html(arr[id]['btn_04']);
+        $('#src_05').html(arr[id]['btn_05']);
+
+
+    }
+
+}
+
+change_video('01');
+
+$('.btn').on('click', function(e){
+    e.preventDefault();
+        console.log($(this));
+        console.log($(this).attr('value'));
+    if($(this).attr('value')){
+        change_video($(this).attr('value'));
+    }
+})
+
+
+</script>
+</body>
+</html>
+
